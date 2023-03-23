@@ -2,6 +2,8 @@ import express from 'express'
 // import productsRoutes from '../src/routes/products.routes.js'
 import userRoutes from '../src/routes/users.routes.js'
 // import { productsRoutes, userRoutes } from '../src/routes/index.js'
+import cors from 'cors'
+import { dbConnection } from './db/config.js'
 
 export class Server {
 
@@ -11,13 +13,18 @@ export class Server {
 
     this.middlewares()
     this.routes()
+    this.connectionDb()
   }
 
   // metodos
+  async connectionDb() {
+    await dbConnection()
+  }
 
   middlewares() {
     this.app.use(express.json())
-    // CORS 
+
+    this.app.use(cors())
   }
 
   routes() {
